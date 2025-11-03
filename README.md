@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GitImg
 
-## Getting Started
-
-First, run the development server:
-
+# curl
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+curl -X POST http://localhost:3000/gitimg \
+  -H "Content-Type: application/json" \
+  -d "{\"fileName\":\"test.png\",\"base64Content\":\"$(base64 -i test.png | tr -d '\n')\"}"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# response
+```js
+{"imgUrl":"https://raw.githubusercontent.com/0x130N/gitimg/main/test.png"}
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Github Token
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Use a fine-grained personal access token
 
-## Learn More
+Go to Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token.
 
-To learn more about Next.js, take a look at the following resources:
+Give it a name and expiration.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Select the Repository access:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Choose Only select repositories → pick the repo you want to upload images to.
 
-## Deploy on Vercel
+## Permissions:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contents → Read & Write ✅ (needed to upload files)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+No need for Delete permissions.
+
+Leave everything else as default (or none).
+
+Generate token and copy it.
+
+This token allows you to create new files. Set in `.env`
+
+```
+GITHUB_TOKEN=github_pat_11AYPV
+```
