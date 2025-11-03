@@ -19,26 +19,14 @@ export async function POST(request: Request) {
 
     const owner = process.env.GITHUB_OWNER || "0x130N";
     const repo = process.env.GITHUB_REPO || "gitimg";
-    const path = ""; // root folder
-    const apiPath = path ? `${path}/${fileName}` : fileName;
 
-    // Step 1: Check if file already exists to get SHA
-    let sha: string | undefined;
-    const getRes = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/contents/${apiPath}`,
-      {
-        headers: { Authorization: `token ${token}` },
-      }
-    );
+    // Create a unique file name to avoid collisions
+    const timestamp = Date.now();
+    const uniqueFileName = `${timestamp}-${fileName}`;
 
-    if (getRes.ok) {
-      const existingFile = await getRes.json();
-      sha = existingFile.sha;
-    }
-
-    // Step 2: Upload or update file
+    // Upload new file
     const response = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/contents/${apiPath}`,
+      `https://api.github.com/repos/${owner}/${repo}/contents/${uniqueFileName}`,
       {
         method: "PUT",
         headers: {
@@ -46,9 +34,8 @@ export async function POST(request: Request) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          message: sha ? `Update ${fileName}` : `Add ${fileName}`,
+          message: `Add ${uniqueFileName}`,
           content: base64Content,
-          ...(sha && { sha }), // include sha if file exists
         }),
       }
     );
@@ -63,7 +50,6 @@ export async function POST(request: Request) {
     }
 
     const data = await response.json();
-
     return NextResponse.json({ imgUrl: data.content?.download_url });
   } catch (err) {
     console.error(err);
