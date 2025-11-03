@@ -2,9 +2,13 @@
 
 # curl
 ```bash
-curl -X POST http://localhost:3000\
+curl -X POST http://localhost:3000/api\
   -H "Content-Type: application/json" \
   -d "{\"fileName\":\"test.png\",\"base64Content\":\"$(base64 -i test.png | tr -d '\n')\"}"
+
+curl -X POST https://gitimg.vercel.app/api \
+-H "Content-Type: application/json" \
+-d "{\"fileName\":\"test.png\",\"base64Content\":\"$(base64 -i test.png | tr -d '\n')\"}"
 ```
 
 # response
