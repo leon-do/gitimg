@@ -2,7 +2,7 @@
 
 # curl
 ```bash
-curl -X POST http://localhost:3000/gitimg \
+curl -X POST http://localhost:3000\
   -H "Content-Type: application/json" \
   -d "{\"fileName\":\"test.png\",\"base64Content\":\"$(base64 -i test.png | tr -d '\n')\"}"
 ```
