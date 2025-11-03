@@ -37,5 +37,7 @@ Generate token and copy it.
 This token allows you to create new files. Set in `.env`
 
 ```
-GITHUB_TOKEN=github_pat_11AYPV
+GITHUB_TOKEN=github_jat_11AYPVW
+GITHUB_OWNER=joe
+GITHUB_REPO=myRepo
 ```

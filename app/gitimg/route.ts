@@ -17,8 +17,8 @@ export async function POST(request: Request) {
     const token = process.env.GITHUB_TOKEN;
     if (!token) throw new Error("Missing GitHub token");
 
-    const owner = "0x130N";
-    const repo = "gitimg";
+    const owner = process.env.GITHUB_OWNER || "0x130N";
+    const repo = process.env.GITHUB_REPO || "gitimg";
     const path = ""; // root folder
 
     const apiPath = path ? `${path}/${fileName}` : fileName;
