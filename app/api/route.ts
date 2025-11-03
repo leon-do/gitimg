@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 
     // Create a unique file name to avoid collisions
     const timestamp = Date.now();
-    const uniqueFileName = `${timestamp}-${fileName}`;
+    const uniqueFileName = `${timestamp}-${fileName.replace(/\s+/g, '')}`;
 
     // Upload new file
     const response = await fetch(
